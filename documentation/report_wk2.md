@@ -2,7 +2,7 @@
 
 **Mitä olen tehnyt tällä viikolla? Miten ohjelma on edistynyt? Mitä opin tällä viikolla / tänään?**
 
-Tällä viikolla aloitin toteuttamaan pelin perustoiminnallisuutta Javalla. Pelin perusmekaniikka toimii ihan hyvin, mutta siitä puuttuu vielä muutamia asioista (mm. diagonaalinen voiton tarkistus ja täysi ruudukko ilman voittoa -tilanteen käsittely). Pelillä on yksinkertainen konsoli-UI ja sitä pystyy tällä hetkellä pelaamaan konsolin kautta kaksi ihmistä. Tein myös keskeisimmälle osalle mekaniikasta testit ja lisäsin projektiin Jacocon testikattavuuden seurattavuutta varten. Lisäsin myös Checkstylen tyylin ylläpitoa ajatellen. Dokumentoin JavaDocciin keskeisimmät metodit.
+Tällä viikolla aloitin toteuttamaan pelin perustoiminnallisuutta Javalla. Pelin perusmekaniikka toimii ihan hyvin, mutta siitä puuttuu vielä muutamia asioista (mm. diagonaalinen voiton tarkistus ja täysi ruudukko ilman voittoa -tilanteen käsittely). Pelillä on yksinkertainen konsoli-UI ja sitä pystyy tällä hetkellä pelaamaan konsolin kautta kaksi ihmistä. Tein myös keskeisimmälle osalle mekaniikasta testit ja lisäsin projektiin Jacocon testikattavuuden seurattavuutta varten. Lisäsin myös Checkstylen tyylin ylläpitoa ajatellen. Dokumentoin Javadocciin keskeisimmät metodit.
 
 Tutustuin ohjaajan ehdottamaan alpha-beta-karsintaan ja aion yrittää toteuttaa algoritmin sen kera. Tarkensin myös määrittelydokumenttia sen osalta, että tarkoitus on että ruudukon koko ja voittosuoran pituus voidaan määrittää peliä aloittaessa. Tällä hetkellä nuo parametrit on kovakoodattuna TicTacToe-luokan konstruktorissa, mutta on tarkoitus, että ne voidaan antaa peliä käynnistäessä.
 
