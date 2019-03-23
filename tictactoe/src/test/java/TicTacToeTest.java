@@ -23,7 +23,7 @@ public class TicTacToeTest {
     @Before
     public void setUp() {
         game = new TicTacToe();
-        game.initializeBoard();
+        game.initialiseBoard();
     }
     
 //    @After
