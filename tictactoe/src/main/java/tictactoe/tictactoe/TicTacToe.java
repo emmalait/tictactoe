@@ -16,9 +16,9 @@ public class TicTacToe {
     private int latestRowCoordinate;
     
     public TicTacToe() {
-        this.cols = 3;
-        this.rows = 3;
-        this.winningStreak = 3;
+        this.cols = 6;
+        this.rows = 6;
+        this.winningStreak = 5;
         this.board = new char[rows][cols];
         this.player = 'X';
         this.latestColCoordinate = -1;

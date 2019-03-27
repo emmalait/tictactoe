@@ -52,10 +52,18 @@ public class TicTacToeTest {
     }
     
     @Test
-    public void switchesPlayer() {
+    public void switchesPlayerFromXtoO() {
         game.switchPlayer();
         char player = game.getPlayer();
         assertEquals('O', player);
+    }
+    
+    @Test
+    public void switchesPlayerFromOtoX() {
+        game.switchPlayer();
+        game.switchPlayer();
+        char player = game.getPlayer();
+        assertEquals('X', player);
     }
     
     @Test
@@ -78,6 +86,32 @@ public class TicTacToeTest {
         game.makeMove(0, 2);
         game.makeMove(0, 3);
         game.makeMove(0, 4);
+        
+        boolean win = game.checkForWin();
+        
+        assertEquals(true, win);
+    }
+    
+    @Test
+    public void findsWinningFwdDiagonal() {
+        game.makeMove(0, 0);
+        game.makeMove(1, 1);
+        game.makeMove(2, 2);
+        game.makeMove(3, 3);
+        game.makeMove(4, 4);
+        
+        boolean win = game.checkForWin();
+        
+        assertEquals(true, win);
+    }
+    
+    @Test
+    public void findsWinningBwdDiagonal() {
+        game.makeMove(0, 4);
+        game.makeMove(1, 3);
+        game.makeMove(2, 2);
+        game.makeMove(3, 1);
+        game.makeMove(4, 0);
         
         boolean win = game.checkForWin();
         
