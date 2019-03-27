@@ -12,13 +12,17 @@ public class TicTacToe {
     private int cols;
     private int rows;
     private int winningStreak;
+    private int latestColCoordinate;
+    private int latestRowCoordinate;
     
     public TicTacToe() {
-        this.cols = 15;
-        this.rows = 15;
-        this.winningStreak = 5;
+        this.cols = 3;
+        this.rows = 3;
+        this.winningStreak = 3;
         this.board = new char[rows][cols];
         this.player = 'X';
+        this.latestColCoordinate = -1;
+        this.latestRowCoordinate = -1;
     }
     
     /**
@@ -54,16 +58,18 @@ public class TicTacToe {
     
     /**
      * Method validates a move and updates the board accordingly.
-     * @param x Column coordinate
-     * @param y Row coordinate
+     * @param row Row coordinate
+     * @param col Column coordinate
      * @return true if move is legal, false if move is illegal
      */
-    public boolean makeMove(int x, int y) {
-        if (x >= cols || x < 0 || y >= rows || y < 0) {
+    public boolean makeMove(int row, int col) {
+        if (!isCoordinateWithinBoard(row, col)) {
             return false;
         }
-        if (isCoordinateFree(x, y)) {
-            board[y][x] = player;
+        if (isCoordinateFree(row, col)) {
+            board[row][col] = player;
+            latestColCoordinate = col;
+            latestRowCoordinate = row;
             return true;
         } else {
             return false;
@@ -71,13 +77,23 @@ public class TicTacToe {
     }
     
     /**
+     * Method checks whether a move coordinate is within the board.
+     * @param row Row coordinate
+     * @param col Column coordinate
+     * @return true if coordinate is within board, false if coordinate is out of bounds
+     */
+    private boolean isCoordinateWithinBoard(int row, int col) {
+        return !(col >= cols || col < 0 || row >= rows || row < 0);
+    }
+    
+    /**
      * Method checks whether a move coordinate is free/unused.
-     * @param x Column coordinate
-     * @param y Row coordinate
+     * @param row Row coordinate
+     * @param col Column coordinate
      * @return true if coordinate is free, false if coordinate has been used
      */
-    private boolean isCoordinateFree(int x, int y) {
-        return board[y][x] == '-';
+    private boolean isCoordinateFree(int row, int col) {
+        return board[row][col] == '-';
     }
     
     /**
@@ -92,67 +108,98 @@ public class TicTacToe {
     }
     
     /**
-     * Method checks the board for winning streaks, i.e. a set number of consecutive X's or O's.
-     * @return true if winning streak is found, false if not
+     * Method checks the current situation on the board for current player's winning streaks.
+     * @return true if a winning streak is found, false if not
      */
     public boolean checkForWin() {
-        return (checkRowsForWin() || checkColumnsForWin() || checkDiagonalsForWin());
+        return (checkRowForWin(latestRowCoordinate) || 
+                checkColumnForWin(latestColCoordinate) || 
+                checkFwdDiagonalForWin(latestRowCoordinate, latestColCoordinate) || 
+                checkBwdDiagonalForWin(latestRowCoordinate, latestColCoordinate));
     }
     
     /**
-     * Method checks the board rows for a winning streak, i.e. set number of consecutive X's or O's.
-     * @return true if winning streak is found, false if not
+     * Method checks a row for winning streaks by the current player.
+     * @param row Row to be checked
+     * @return true if a winning streak is found, false if not
      */
-    private boolean checkRowsForWin() {
-        int counter = 1;
-        char last = '-';
-        char current;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                current = board[i][j];
-                if (current == 'X' || current == 'O') {
-                    if (current == last) {
-                        counter++;
-                        if (counter == winningStreak) {
-                            return true;
-                        }
-                    }
-                }
-                last = current;
-            }
-            counter = 1;
-        }
-        return false;
+    private boolean checkRowForWin(int row) {
+        return checkLine(0, 0, row, 1, 0);
     }
     
     /**
-     * Method checks the board columns for a winning streak, i.e. set number of consecutive X's or O's.
-     * @return true if winning streak is found, false if not
+     * Method checks a column for winning streaks by the current player.
+     * @param col Column to be checked
+     * @return true if a winning streak is found, false if not
      */
-    private boolean checkColumnsForWin() {
-        int counter = 1;
-        char last = '-';
-        char current;
-        for (int i = 0; i < cols; i++) {
-            for (int j = 0; j < rows; j++) {
-                current = board[j][i];
-                if (current == 'X' || current == 'O') {
-                    if (current == last) {
-                        counter++;
-                        if (counter == winningStreak) {
-                            return true;
-                        }
-                    }
-                }
-                last = current;
-            }
-            counter = 1;
-        }
-        return false;
+    private boolean checkColumnForWin(int col) {
+        return checkLine(0, col, 0, 0, 1);
     }
     
-    private boolean checkDiagonalsForWin() {
-        return false;
+    /**
+     * Method checks a forward diagonal for winning streaks by the current player.
+     * @param row Row coordinate for the diagonal
+     * @param col Column coordinate for the diagonal
+     * @return true if a winning streak is found, false if not
+     */
+    private boolean checkFwdDiagonalForWin(int row, int col) {
+        int smallestDistToEdge = -1;
+        
+        if (col < row) {
+            smallestDistToEdge = col;
+        } else {
+            smallestDistToEdge = row;
+        }
+        
+        return checkLine(0, col - smallestDistToEdge, row - smallestDistToEdge, 1, 1);
+    }
+    
+    /**
+     * Method checks a backward diagonal for winning streaks by the current player.
+     * @param row Row coordinate for the diagonal
+     * @param col Column coordinate for the diagonal
+     * @return true if a winning streak is found, false if not
+     */
+    private boolean checkBwdDiagonalForWin(int row, int col) {
+        int smallestDistToEdge = -1;
+        
+        int distToRight = cols - 1 - col;
+        
+        if (distToRight < row) {
+            smallestDistToEdge = distToRight;
+        } else {
+            smallestDistToEdge = row;
+        }
+        
+        return checkLine(0, col + smallestDistToEdge, row - smallestDistToEdge, -1, 1);
+    }
+    
+    /**
+     * Method recursively checks a series of coordinates on the board for a 
+     * winning streak by the current player. 
+     * @param counter Number of subsequent marks found by the current player
+     * @param col Column coordinate to be checked
+     * @param row Row coordinate to be checked
+     * @param colIncrement By how much the column coordinate is incremented for the next coordinate in the series
+     * @param rowIncrement By how much the row coordinate is incremented for the next coordinate in the series
+     * @return true if a winning streak is found, false if not
+     */
+    private boolean checkLine(int counter, int col, int row, int colIncrement, int rowIncrement) {
+        if (!isCoordinateWithinBoard(row, col)) {
+            return false;
+        }
+        
+        if (board[row][col] == player) {
+            counter++;
+            if (counter == winningStreak) {
+                return true;
+            } else {
+                return checkLine(counter, col + colIncrement, row + rowIncrement, colIncrement, rowIncrement);
+            }
+        } else {
+            counter = 0;
+            return checkLine(counter, col + colIncrement, row + rowIncrement, colIncrement, rowIncrement);
+        }
     }
     
 }

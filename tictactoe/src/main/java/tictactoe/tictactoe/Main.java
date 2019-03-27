@@ -12,8 +12,8 @@ public class Main {
         // TODO code application logic here
         Scanner reader = new Scanner(System.in);
         TicTacToe game = new TicTacToe();
-        int x;
-        int y;
+        int row;
+        int col;
         
         System.out.println("=== Tic Tac Toe ===");
         game.initialiseBoard();
@@ -22,13 +22,13 @@ public class Main {
         while (true) {
             System.out.println("Player " + game.getPlayer() + "'s turn ");
             System.out.println("Enter move coordinates: ");
-            System.out.print("x: ");
-            x = Integer.parseInt(reader.nextLine());
-            System.out.print("y: ");
-            y = Integer.parseInt(reader.nextLine());
+            System.out.print("row: ");
+            row = Integer.parseInt(reader.nextLine());
+            System.out.print("column: ");
+            col = Integer.parseInt(reader.nextLine());
             System.out.println("");
 
-            if (!game.makeMove(x - 1, y - 1)) {
+            if (!game.makeMove(row - 1, col - 1)) {
                 System.out.println("That spot is already taken!");
                 System.out.println("");
             } else {
