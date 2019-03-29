@@ -1,13 +1,13 @@
 # Ristinolla
 
 ## Dokumentaatio
-- Viikkoraportit: [vko 1](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk1.md), [vko 2](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk2.md)
+- Viikkoraportit: [vko 1](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk1.md), [vko 2](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk2.md), [vko 3](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk3.md)
 - [Määrittelydokumentti](https://github.com/emmalait/tictactoe/blob/master/documentation/specification.md)
 
 
 ## Muuta
 
-Seuraavat toimenpiteet suoritetaan Maven-projektin juuressa eli polussa `/tictactoe`.
+Seuraavat toimenpiteet suoritetaan Maven-projektin juuressa eli polussa */tictactoe*.
 
 ### Testaus
 Testit suoritetaan komennolla:
