@@ -1,46 +1,4 @@
-package tictactoe.tictactoe;
-
-import java.util.ArrayList;
-import java.util.List;
-
-class Move {
-
-    private int rowCoordinate;
-    private int colCoordinate;
-    private int score;
-    
-    public Move() {
-        
-    }
-
-    public Move(int row, int col) {
-        this.rowCoordinate = row;
-        this.colCoordinate = col;
-        this.score = 0;
-    }
-
-    public int getRowCoordinate() {
-        return rowCoordinate;
-    }
-
-    public int getColCoordinate() {
-        return colCoordinate;
-    }
-    
-    public int getScore() {
-        return this.score;
-    }
-    
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    @Override
-    public String toString() {
-        return "Move{" + "rowCoordinate=" + rowCoordinate + ", colCoordinate=" + colCoordinate + ", score=" + score + '}';
-    }
-    
-}
+package tictactoe.game;
 
 /**
  * Class is responsible for the basic game mechanics.
@@ -53,17 +11,17 @@ public class TicTacToe {
     private int cols;
     private int rows;
     private int winningStreak;
-    private int latestColCoordinate;
-    private int latestRowCoordinate;
+    private Move latestMove;
+    private int moves;
 
-    public TicTacToe() {
-        this.cols = 3;
-        this.rows = 3;
-        this.winningStreak = 3;
+    public TicTacToe(int rows, int cols, int winningStreak) {
+        this.rows = rows;
+        this.cols = cols;
+        this.winningStreak = winningStreak;
         this.board = new char[rows][cols];
         this.player = 'X';
-        this.latestColCoordinate = -1;
-        this.latestRowCoordinate = -1;
+        this.latestMove = new Move();
+        this.moves = 0;
     }
 
     /**
@@ -124,8 +82,9 @@ public class TicTacToe {
             return false;
         } else {
             board[row][col] = player;
-            latestColCoordinate = col;
-            latestRowCoordinate = row;
+            latestMove.setColCoordinate(col);
+            latestMove.setRowCoordinate(row);
+            moves++;
             return true;
         }
     }
@@ -177,10 +136,21 @@ public class TicTacToe {
      * @return true if a winning streak is found, false if not
      */
     public boolean checkForWin(char[][] board, char player) {
-        return (checkRowForWin(board, player, latestRowCoordinate)
-                || checkColumnForWin(board, player, latestColCoordinate)
-                || checkFwdDiagonalForWin(board, player, latestRowCoordinate, latestColCoordinate)
-                || checkBwdDiagonalForWin(board, player, latestRowCoordinate, latestColCoordinate));
+        return (checkRowForWin(board, player, latestMove.getRowCoordinate())
+                || checkColumnForWin(board, player, latestMove.getColCoordinate())
+                || checkFwdDiagonalForWin(board, player, latestMove.getRowCoordinate(), latestMove.getColCoordinate())
+                || checkBwdDiagonalForWin(board, player, latestMove.getRowCoordinate(), latestMove.getColCoordinate()));
+    }
+    
+    /**
+     * 
+     */
+    public boolean isGameOver() {
+        if (moves == rows * cols) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -276,76 +246,4 @@ public class TicTacToe {
         }
     }
     
-    public Move minimax(char[][] board, char maxPlayer, char minPlayer, boolean isMax) {
-        List<Move> availablePlaces = new ArrayList<>();
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (board[i][j] == '-') {
-                    availablePlaces.add(new Move(i, j));
-                }
-            }
-        }
-
-        if (checkForWin(board, maxPlayer)) {
-            Move move = new Move();
-            move.setScore(10);
-            return move;
-        } else if (checkForWin(board, minPlayer)) {
-            Move move = new Move();
-            move.setScore(-10);
-            return move;
-        } else if (availablePlaces.isEmpty()) {
-            Move move = new Move();
-            move.setScore(0);
-            return move;
-        }
-
-        List<Move> scores = new ArrayList<>();
-
-        for (Move move : availablePlaces) {
-            char[][] newBoard = board;
-
-            if (isMax) {
-                newBoard[move.getRowCoordinate()][move.getColCoordinate()] = maxPlayer;
-            } else {
-                newBoard[move.getRowCoordinate()][move.getColCoordinate()] = minPlayer;
-            }
-
-            if (isMax) {
-                Move result = minimax(newBoard, maxPlayer, minPlayer, false);
-                move.setScore(result.getScore());
-            } else {
-                Move result = minimax(newBoard, maxPlayer, minPlayer, true);
-                move.setScore(result.getScore());
-            }
-
-            newBoard[move.getRowCoordinate()][move.getColCoordinate()] = '-';
-
-            scores.add(move);
-        }
-
-        int bestMove = -1;
-
-        if (isMax) {
-            int bestScore = -100000;
-            for (int i = 0; i < scores.size(); i++) {
-                if (scores.get(i).getScore() > bestScore) {
-                    bestScore = scores.get(i).getScore();
-                    bestMove = i;
-                }
-            }
-        } else {
-            int bestScore = 100000;
-            for (int i = 0; i < scores.size(); i++) {
-                if (scores.get(i).getScore() < bestScore) {
-                    bestScore = scores.get(i).getScore();
-                    bestMove = i;
-                }
-            }
-        }
-
-        return scores.get(bestMove);
-    }
-
 }

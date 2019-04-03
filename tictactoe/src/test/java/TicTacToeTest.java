@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import tictactoe.tictactoe.TicTacToe;
+import tictactoe.game.TicTacToe;
 
 public class TicTacToeTest {
     TicTacToe game;
@@ -22,7 +22,7 @@ public class TicTacToeTest {
     
     @Before
     public void setUp() {
-        game = new TicTacToe();
+        game = new TicTacToe(5, 5, 5);
         game.initialiseBoard();
     }
     
@@ -74,7 +74,7 @@ public class TicTacToeTest {
         game.makeMove(3, 0);
         game.makeMove(4, 0);
         
-        boolean win = game.checkForWin();
+        boolean win = game.checkForWin(game.getBoard(), 'X');
         
         assertEquals(true, win);
     }
@@ -87,7 +87,7 @@ public class TicTacToeTest {
         game.makeMove(0, 3);
         game.makeMove(0, 4);
         
-        boolean win = game.checkForWin();
+        boolean win = game.checkForWin(game.getBoard(), 'X');
         
         assertEquals(true, win);
     }
@@ -100,7 +100,7 @@ public class TicTacToeTest {
         game.makeMove(3, 3);
         game.makeMove(4, 4);
         
-        boolean win = game.checkForWin();
+        boolean win = game.checkForWin(game.getBoard(), 'X');
         
         assertEquals(true, win);
     }
@@ -113,7 +113,7 @@ public class TicTacToeTest {
         game.makeMove(3, 1);
         game.makeMove(4, 0);
         
-        boolean win = game.checkForWin();
+        boolean win = game.checkForWin(game.getBoard(), 'X');
         
         assertEquals(true, win);
     }
