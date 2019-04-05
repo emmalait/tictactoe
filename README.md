@@ -1,28 +1,15 @@
 # Ristinolla
 
 ## Dokumentaatio
-- Viikkoraportit: [vko 1](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk1.md), [vko 2](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk2.md), [vko 3](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk3.md)
+- Viikkoraportit: [vko 1](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk1.md), [vko 2](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk2.md), [vko 3](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk3.md), [vko 4](https://github.com/emmalait/tictactoe/blob/master/documentation/report_wk4.md)
 - [Määrittelydokumentti](https://github.com/emmalait/tictactoe/blob/master/documentation/specification.md)
+- [Toteutusdokumentti](https://github.com/emmalait/tictactoe/blob/master/documentation/implementation.md)
+- [Testausdokumentti](https://github.com/emmalait/tictactoe/blob/master/documentation/testing.md)
 
 
 ## Muuta
 
 Seuraavat toimenpiteet suoritetaan Maven-projektin juuressa eli polussa */tictactoe*.
-
-### Testaus
-Testit suoritetaan komennolla:
-
-```
-mvn test
-```
-
-Testikattavuusraportti luodaan komennolla:
-
-```
-mvn jacoco:report
-```
-
-Kattavuusraporttia voi tarkastella avaamalla selaimessa tiedoston *target/site/jacoco/index.html*.
 
 ### JavaDoc
 JavaDoc generoidaan komennolla:
