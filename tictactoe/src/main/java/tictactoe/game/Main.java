@@ -10,8 +10,8 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         Scanner reader = new Scanner(System.in);
-        TicTacToe game = new TicTacToe(4, 4, 3);
-        AI ai = new AI(game, 4, 4, 'X');
+        TicTacToe game = new TicTacToe(3, 3, 3);
+        AI ai = new AI(game, 3, 3, 'X');
         int row;
         int col;
 
@@ -26,20 +26,18 @@ public class Main {
         game.makeMove(2, 2);
         game.switchPlayer();
         game.printBoard();*/
-        
-        game.makeMove(0, 0);
+
+        /*game.makeMove(0, 0);
         game.makeMove(0, 1);
         //game.makeMove(1, 1);
         game.switchPlayer();
         game.makeMove(0, 2);
         game.makeMove(1, 0);
         //game.makeMove(2, 2);
-        game.switchPlayer();
-        
-        
+        game.switchPlayer();*/
+
         game.printBoard();
         System.out.println("");
-        
 
         while (true) {
             if (game.getPlayer() == 'X') {
@@ -52,13 +50,15 @@ public class Main {
 //                col = Integer.parseInt(reader.nextLine());
 //                System.out.println("");
 //                game.makeMove(row - 1, col - 1);
-                
-                Move move = ai.moveAI();
+                long aikaAlussa = System.currentTimeMillis();
+                Move move = ai.makeMove();
+                long aikaLopussa = System.currentTimeMillis();
+                System.out.println("Operaatioon kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
                 game.makeMove(move.getRowCoordinate(), move.getColCoordinate());
-                
+
             } else {
                 System.out.println("Player " + game.getPlayer() + "'s turn ");
-                
+
                 System.out.println("Enter move coordinates: ");
                 System.out.print("row: ");
                 row = Integer.parseInt(reader.nextLine());
@@ -72,13 +72,13 @@ public class Main {
             }
             game.printBoard();
             System.out.println("");
-            
+
             if (game.checkForWin(game.getBoard(), game.getPlayer())) {
                 System.out.println("Player " + game.getPlayer() + " wins!");
                 break;
             }
-            
-            if(game.isGameOver()) {
+
+            if (game.isGameOver()) {
                 System.out.println("Draw!");
                 break;
             }

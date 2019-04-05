@@ -14,6 +14,12 @@ public class TicTacToe {
     private Move latestMove;
     private int moves;
 
+    /**
+     * 
+     * @param rows Rows of the board
+     * @param cols Columns of the board
+     * @param winningStreak Number of marks in a row required to win
+     */
     public TicTacToe(int rows, int cols, int winningStreak) {
         this.rows = rows;
         this.cols = cols;
