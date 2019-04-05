@@ -4,24 +4,104 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AI {
-    
+
     private TicTacToe game;
-    private char[][] board;
     private int rows;
     private int cols;
     private char maxPlayer;
     private char minPlayer;
-    private boolean isMax;
+    private int maxDepth;
 
-    public AI(TicTacToe game, int rows, int cols, char maxPlayer, char minPlayer) {
+    public AI(TicTacToe game, int rows, int cols, char maxPlayer) {
         this.game = game;
         this.rows = rows;
         this.cols = cols;
         this.maxPlayer = maxPlayer;
-        this.minPlayer = minPlayer;
+        if (maxPlayer == 'X') {
+            this.minPlayer = 'O';
+        } else {
+            this.minPlayer = 'X';
+        }
+        this.maxDepth = rows * cols + 1;
     }
 
-    public Move minimax(char[][] board, char maxPlayer, char minPlayer, boolean isMax) {
+    public Move moveAI() {
+        char[][] boardCopy = new char[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                boardCopy[i][j] = game.getBoard()[i][j];
+            }
+        }
+
+        return minmax(boardCopy, 0, maxPlayer, new Move());
+    }
+
+    public Move minmax(char[][] board, int depth, char player, Move latestMove) {
+        char[][] boardCopy = new char[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                boardCopy[i][j] = board[i][j];
+            }
+        }
+
+        if (game.checkForWinWithMove(boardCopy, maxPlayer, latestMove)) {
+            // If maximizing player wins, return score maxdepth-d.
+            return new Move(-1, -1, maxDepth - depth);
+        } else if (game.checkForWinWithMove(boardCopy, minPlayer, latestMove)) {           
+            // If minimizing player wins, return score maxdepth-10.
+            return new Move(-1, -1, depth - maxDepth);
+        }
+
+        // Check passed board for empty spaces.
+        List<Move> availablePlaces = getAvailablePlaces(boardCopy);
+
+        if (availablePlaces.isEmpty()) {            
+            return new Move(-1, -1, 0);
+        }
+
+        List<Move> values = new ArrayList<>();
+
+        for (Move move : availablePlaces) {
+            boardCopy[move.getRowCoordinate()][move.getColCoordinate()] = player;
+            Move moveWithScore = minmax(boardCopy, depth + 1, (player == maxPlayer) ? minPlayer : maxPlayer, move);
+            moveWithScore.setRowCoordinate(move.getRowCoordinate());
+            moveWithScore.setColCoordinate(move.getColCoordinate());
+            values.add(moveWithScore);
+            boardCopy[move.getRowCoordinate()][move.getColCoordinate()] = '-';
+        }
+
+        if (depth == 0) {
+            for (Move value : values) {
+                System.out.println("Row: " + String.valueOf(value.getRowCoordinate()) + ", col: " + String.valueOf(value.getColCoordinate())+ ", score: " + String.valueOf(value.getScore()));
+            }
+        }
+        
+        if (player == maxPlayer) {
+            Move max = new Move(-1, -1, Integer.MIN_VALUE);
+
+            for (Move value : values) {
+                if (value.getScore() > max.getScore()) {
+                    max = value;
+                }
+            }
+
+            return max;
+
+        } else {
+            Move min = new Move(-1, -1, Integer.MAX_VALUE);
+
+            for (Move value : values) {
+                if (value.getScore() < min.getScore()) {
+                    min = value;
+                }
+            }
+
+            return min;
+        }
+
+    }
+
+    public List<Move> getAvailablePlaces(char[][] board) {
         List<Move> availablePlaces = new ArrayList<>();
 
         for (int i = 0; i < rows; i++) {
@@ -32,65 +112,7 @@ public class AI {
             }
         }
 
-        if (game.checkForWin(board, maxPlayer)) {
-            Move move = new Move();
-            move.setScore(10);
-            return move;
-        } else if (game.checkForWin(board, minPlayer)) {
-            Move move = new Move();
-            move.setScore(-10);
-            return move;
-        } else if (availablePlaces.isEmpty()) {
-            Move move = new Move();
-            move.setScore(0);
-            return move;
-        }
-
-        List<Move> scores = new ArrayList<>();
-
-        for (Move move : availablePlaces) {
-            char[][] newBoard = board;
-
-            if (isMax) {
-                newBoard[move.getRowCoordinate()][move.getColCoordinate()] = maxPlayer;
-            } else {
-                newBoard[move.getRowCoordinate()][move.getColCoordinate()] = minPlayer;
-            }
-
-            if (isMax) {
-                Move result = minimax(newBoard, maxPlayer, minPlayer, false);
-                move.setScore(result.getScore());
-            } else {
-                Move result = minimax(newBoard, maxPlayer, minPlayer, true);
-                move.setScore(result.getScore());
-            }
-
-            newBoard[move.getRowCoordinate()][move.getColCoordinate()] = '-';
-
-            scores.add(move);
-        }
-
-        int bestMove = -1;
-
-        if (isMax) {
-            int bestScore = -100000;
-            for (int i = 0; i < scores.size(); i++) {
-                if (scores.get(i).getScore() > bestScore) {
-                    bestScore = scores.get(i).getScore();
-                    bestMove = i;
-                }
-            }
-        } else {
-            int bestScore = 100000;
-            for (int i = 0; i < scores.size(); i++) {
-                if (scores.get(i).getScore() < bestScore) {
-                    bestScore = scores.get(i).getScore();
-                    bestMove = i;
-                }
-            }
-        }
-
-        return scores.get(bestMove);
+        return availablePlaces;
     }
 
 }

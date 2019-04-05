@@ -143,6 +143,21 @@ public class TicTacToe {
     }
     
     /**
+     * Method checks the current situation on the board for current player's
+     * winning streaks.
+     *
+     * @param board
+     * @param player
+     * @return true if a winning streak is found, false if not
+     */
+    public boolean checkForWinWithMove(char[][] board, char player, Move latestMove) {
+        return (checkRowForWin(board, player, latestMove.getRowCoordinate())
+                || checkColumnForWin(board, player, latestMove.getColCoordinate())
+                || checkFwdDiagonalForWin(board, player, latestMove.getRowCoordinate(), latestMove.getColCoordinate())
+                || checkBwdDiagonalForWin(board, player, latestMove.getRowCoordinate(), latestMove.getColCoordinate()));
+    }
+    
+    /**
      * 
      */
     public boolean isGameOver() {

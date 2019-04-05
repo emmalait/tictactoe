@@ -17,6 +17,12 @@ public class Move {
         this.colCoordinate = col;
         this.score = 0;
     }
+    
+    public Move(int row, int col, int score) {
+        this.rowCoordinate = row;
+        this.colCoordinate = col;
+        this.score = score;
+    }
 
     public int getRowCoordinate() {
         return rowCoordinate;
@@ -44,7 +50,7 @@ public class Move {
 
     @Override
     public String toString() {
-        return "Move{" + "rowCoordinate=" + rowCoordinate + ", colCoordinate=" + colCoordinate + ", score=" + score + '}';
+        return "(row: " + rowCoordinate + ", col: " + colCoordinate + ", score: " + score + ')';
     }
     
 }

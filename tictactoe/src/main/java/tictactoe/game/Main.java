@@ -10,8 +10,8 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         Scanner reader = new Scanner(System.in);
-        TicTacToe game = new TicTacToe(3, 3, 3);
-        AI ai = new AI(game, 3, 3, 'X', 'O');
+        TicTacToe game = new TicTacToe(4, 4, 3);
+        AI ai = new AI(game, 4, 4, 'X');
         int row;
         int col;
 
@@ -28,9 +28,15 @@ public class Main {
         game.printBoard();*/
         
         game.makeMove(0, 0);
+        game.makeMove(0, 1);
+        //game.makeMove(1, 1);
         game.switchPlayer();
         game.makeMove(0, 2);
+        game.makeMove(1, 0);
+        //game.makeMove(2, 2);
         game.switchPlayer();
+        
+        
         game.printBoard();
         System.out.println("");
         
@@ -47,7 +53,7 @@ public class Main {
 //                System.out.println("");
 //                game.makeMove(row - 1, col - 1);
                 
-                Move move = ai.minimax(game.getBoard(), 'X', 'O', true);
+                Move move = ai.moveAI();
                 game.makeMove(move.getRowCoordinate(), move.getColCoordinate());
                 
             } else {
