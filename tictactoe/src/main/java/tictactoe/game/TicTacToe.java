@@ -80,7 +80,7 @@ public class TicTacToe {
      */
     public boolean makeMove(int row, int col) {
         if (!isCoordinateWithinBoard(row, col)) {
-            System.out.println("Illegal coordinates");
+            System.out.println("Illegal coordinates: " + row + ", " + col);
             return false;
         }
         if (!isCoordinateFree(row, col)) {

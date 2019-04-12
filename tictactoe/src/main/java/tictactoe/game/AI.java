@@ -2,6 +2,7 @@ package tictactoe.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import tictactoe.data.MoveList;
 
 /**
  * Class is responsible for the AI.
@@ -32,7 +33,7 @@ public class AI {
         } else {
             this.minPlayer = 'X';
         }
-        this.maxDepth = rows * cols + 1;
+        this.maxDepth = 4;
     }
 
     /**
@@ -48,8 +49,8 @@ public class AI {
             }
         }
 
-        //return minmax(boardCopy, 0, maxPlayer, new Move());
-        return minmaxAB(boardCopy, 0, maxPlayer, new Move(), Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return minmax(boardCopy, 0, maxPlayer, new Move());
+        //return minmaxAB(boardCopy, 0, maxPlayer, new Move(), Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
     /**
@@ -78,15 +79,16 @@ public class AI {
         }
 
         // Check passed board for empty spaces.
-        List<Move> availablePlaces = getAvailablePlaces(boardCopy);
-
+        MoveList availablePlaces = getAvailablePlaces(boardCopy);
+        
         if (availablePlaces.isEmpty()) {
             return new Move(-1, -1, 0);
         }
 
-        List<Move> scores = new ArrayList<>();
-
-        for (Move move : availablePlaces) {
+        MoveList scores = new MoveList(rows*cols);
+        
+        for (int i = 0; i < availablePlaces.size(); i++) {
+            Move move = availablePlaces.get(i);
             boardCopy[move.getRowCoordinate()][move.getColCoordinate()] = player;
             Move moveWithScore = minmax(boardCopy, depth + 1, (player == maxPlayer) ? minPlayer : maxPlayer, move);
             moveWithScore.setRowCoordinate(move.getRowCoordinate());
@@ -95,21 +97,25 @@ public class AI {
             boardCopy[move.getRowCoordinate()][move.getColCoordinate()] = '-';
         }
 
+        System.out.println("Scores size: " + scores.size());
+        
         if (player == maxPlayer) {
             Move max = new Move(-1, -1, Integer.MIN_VALUE);
-
-            for (Move value : scores) {
+            
+            for (int i = 0; i < scores.size(); i++) {
+                Move value = scores.get(i);
                 if (value.getScore() > max.getScore()) {
                     max = value;
-                }
+                } 
             }
 
             return max;
 
         } else {
             Move min = new Move(-1, -1, Integer.MAX_VALUE);
-
-            for (Move value : scores) {
+            
+            for (int i = 0; i < scores.size(); i++) {
+                Move value = scores.get(i);
                 if (value.getScore() < min.getScore()) {
                     min = value;
                 }
@@ -214,8 +220,9 @@ public class AI {
      * @param board Current board
      * @return List of possible moves
      */
-    private List<Move> getAvailablePlaces(char[][] board) {
-        List<Move> availablePlaces = new ArrayList<>();
+    private MoveList getAvailablePlaces(char[][] board) {
+        List<Move> availablePlaces2 = new ArrayList<>();
+        MoveList availablePlaces = new MoveList(rows * cols);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
