@@ -15,6 +15,7 @@ public class AI {
     private char maxPlayer;
     private char minPlayer;
     private int maxDepth;
+    private MoveList potentialMoves;
 
     /**
      * @param game The instance of TicTacToe the AI is to play in
@@ -29,6 +30,7 @@ public class AI {
             this.minPlayer = 'X';
         }
         this.maxDepth = (game.getBoard().getRows() * game.getBoard().getCols() > 7) ? 7 : game.getBoard().getRows() * game.getBoard().getCols();
+        this.potentialMoves = new MoveList(game.getBoard().getRows() * game.getBoard().getCols());
     }
 
     /**
@@ -129,8 +131,8 @@ public class AI {
         if (board.checkForWinWithMove(maxPlayer, latestMove)) {
             // If maximizing player wins, return score maxDepth-depth.
 
-            System.out.println("d: " + depth + ", player: " + player + ", move: " + latestMove);
-            System.out.println("Max wins, score: " + String.valueOf(maxDepth - depth));
+            /*System.out.println("d: " + depth + ", player: " + player + ", move: " + latestMove);
+            System.out.println("Max wins, score: " + String.valueOf(maxDepth - depth));*/
             return new Move(-1, -1, maxDepth - depth);
         } else if (board.checkForWinWithMove(minPlayer, latestMove)) {
             // If minimizing player wins, return score depth-maxDepth.
@@ -160,7 +162,7 @@ public class AI {
 
             for (int i = 0; i < availablePlaces.size(); i++) {
                 Move move = availablePlaces.get(i);
-                System.out.println("Player " + player + " makes move: " + move);
+                //System.out.println("Player " + player + " makes move: " + move);
 
                 board.getArray()[move.getRow()][move.getCol()] = player;
                 Move moveWithScore = minmaxAB(board, depth + 1, (player == maxPlayer) ? minPlayer : maxPlayer, move, alpha, beta);
@@ -169,7 +171,7 @@ public class AI {
 
                 board.getArray()[move.getRow()][move.getCol()] = '-';
 
-                System.out.println("Move (max): " + move.getRow() + ", " + move.getCol() + "; alpha: " + alpha + ", beta: " + beta);
+                //System.out.println("Move (max): " + move.getRow() + ", " + move.getCol() + "; alpha: " + alpha + ", beta: " + beta);
                 if (moveWithScore.getScore() > bestMove.getScore()) {
                     bestMove = moveWithScore;
                 }
@@ -180,7 +182,7 @@ public class AI {
 
                 // Alpha-beta pruning
                 if (beta <= alpha) {
-                    System.out.println("BREAK: Move (max): " + move.getRow() + ", " + move.getCol() + "; alpha: " + alpha + ", beta: " + beta);
+                    //System.out.println("BREAK: Move (max): " + move.getRow() + ", " + move.getCol() + "; alpha: " + alpha + ", beta: " + beta);
 
                     break;
                 }
@@ -244,43 +246,4 @@ public class AI {
         return moves;
     }
 
-    /**
-     * Method for finding free places on the board near existing moves.
-     *
-     * @param board Current board
-     * @param latestMove The most recent move on the board
-     * @return List of potential moves
-     */
-    private MoveList getPotentialMoves(Board board, Move latestMove) {
-        MoveList moves = new MoveList(board.getRows() * board.getCols());
-
-        // Tarkista kaikki suunnat ympäriltä (8).
-        // Jos jossain suunnassa ruutu =/= '-', tarkista tämän ympäriltä 
-        // kaikki muut suunnat, paitsi se suunta, josta tämä ruutu saatiin.
-        // All directions (8): N, NE, E, SE, S, SW, W, NW
-        return moves;
-    }
-
-    private boolean checkDirection(Board board, Move move, boolean N, boolean NE, boolean E, boolean SE, boolean S, boolean SW, boolean W, boolean NW) {
-        if (N) {
-            board.isFree(move.getRow() - 1, move.getCol());
-        } else if (NE) {
-            
-        } else if (E) {
-            
-        } else if (SE) {
-            
-        } else if (S) {
-            
-        } else if (SW) {
-            
-        } else if (W) {
-            
-        } else if (NW) {
-            
-        }
-
-        return false;
-    }
-    
 }

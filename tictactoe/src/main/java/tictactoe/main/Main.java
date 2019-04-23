@@ -19,7 +19,37 @@ public class Main {
 
         System.out.println("=== Tic Tac Toe ===");
 
+         /*game.makeMove(0, 2);
+        game.makeMove(1, 0);
+        game.makeMove(2, 0);
+        game.switchPlayer();
+        game.makeMove(0, 0);
+        game.makeMove(2, 1);
+        game.makeMove(2, 2);
+        game.switchPlayer();
+        game.printBoard();*/
+
+        /*game.makeMove(0, 0);
+        game.makeMove(0, 1);
+        //game.makeMove(1, 1);
+        game.switchPlayer();
+        game.makeMove(0, 2);
+        game.makeMove(1, 0);
+        //game.makeMove(2, 2);
+        game.switchPlayer();*/
+
+        /*game.makeMove(0, 0);
+        game.makeMove(1, 1);
+        game.makeMove(1, 2);
+        game.switchPlayer();
+        game.makeMove(0, 2);
+        game.makeMove(1, 0);
+        game.makeMove(2, 2);
+        game.switchPlayer();*/
+
         game.getBoard().printBoard();
+
+        
         System.out.println("");
 
         while (true) {

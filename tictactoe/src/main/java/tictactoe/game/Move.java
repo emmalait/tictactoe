@@ -91,5 +91,15 @@ public class Move {
     public String toString() {
         return "(row: " + row + ", col: " + col + ", score: " + score + ')';
     }
+
+    @Override
+    public boolean equals(Object object) {
+        boolean equals = false;
+        Move other = (Move) object;
+        if (row == other.getRow() && col == other.getCol() && score == other.getScore()) {
+            equals = true;
+        }
+        return equals;
+    }
     
 }
