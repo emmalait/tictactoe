@@ -23,7 +23,6 @@ public class TicTacToeTest {
     @Before
     public void setUp() {
         game = new Game(5, 5, 5);
-        game.initialiseBoard();
     }
     
 //    @After
@@ -32,9 +31,9 @@ public class TicTacToeTest {
     
     @Test
     public void makingALegalMoveIsPossible() {
-        game.printBoard();
+        game.getBoard().printBoard();
         boolean ok = game.makeMove(0, 0);
-        game.printBoard();
+        game.getBoard().printBoard();
         assertEquals(true, ok);
     }
     
@@ -74,7 +73,7 @@ public class TicTacToeTest {
         game.makeMove(3, 0);
         game.makeMove(4, 0);
         
-        boolean win = game.checkForWin(game.getBoard(), 'X');
+        boolean win = game.getBoard().checkForWin('X', game.getLatestMove());
         
         assertEquals(true, win);
     }
@@ -87,7 +86,7 @@ public class TicTacToeTest {
         game.makeMove(0, 3);
         game.makeMove(0, 4);
         
-        boolean win = game.checkForWin(game.getBoard(), 'X');
+        boolean win = game.getBoard().checkForWin('X', game.getLatestMove());
         
         assertEquals(true, win);
     }
@@ -100,7 +99,7 @@ public class TicTacToeTest {
         game.makeMove(3, 3);
         game.makeMove(4, 4);
         
-        boolean win = game.checkForWin(game.getBoard(), 'X');
+        boolean win = game.getBoard().checkForWin('X', game.getLatestMove());
         
         assertEquals(true, win);
     }
@@ -113,7 +112,7 @@ public class TicTacToeTest {
         game.makeMove(3, 1);
         game.makeMove(4, 0);
         
-        boolean win = game.checkForWin(game.getBoard(), 'X');
+        boolean win = game.getBoard().checkForWin('X', game.getLatestMove());
         
         assertEquals(true, win);
     }

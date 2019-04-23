@@ -27,8 +27,7 @@ public class AITest {
     @Before
     public void setUp() {
         game = new Game(3, 3, 3);
-        game.initialiseBoard();
-        ai = new AI(game, 3, 3, 'X');
+        ai = new AI(game, 'X');
     }
     
 //    @After
