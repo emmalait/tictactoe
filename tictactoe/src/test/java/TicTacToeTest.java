@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import tictactoe.game.TicTacToe;
+import tictactoe.game.Game;
 
 public class TicTacToeTest {
-    TicTacToe game;
+    Game game;
     
     public TicTacToeTest() {
     }
@@ -22,7 +22,7 @@ public class TicTacToeTest {
     
     @Before
     public void setUp() {
-        game = new TicTacToe(5, 5, 5);
+        game = new Game(5, 5, 5);
         game.initialiseBoard();
     }
     

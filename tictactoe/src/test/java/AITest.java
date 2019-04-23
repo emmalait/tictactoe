@@ -4,13 +4,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import tictactoe.game.AI;
+import tictactoe.ai.AI;
 import tictactoe.game.Move;
-import tictactoe.game.TicTacToe;
+import tictactoe.game.Game;
 
 
 public class AITest {
-    TicTacToe game;
+    Game game;
     AI ai;
     
     public AITest() {
@@ -26,7 +26,7 @@ public class AITest {
     
     @Before
     public void setUp() {
-        game = new TicTacToe(3, 3, 3);
+        game = new Game(3, 3, 3);
         game.initialiseBoard();
         ai = new AI(game, 3, 3, 'X');
     }

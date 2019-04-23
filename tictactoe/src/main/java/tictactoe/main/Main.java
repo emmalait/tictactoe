@@ -1,6 +1,9 @@
-package tictactoe.game;
+package tictactoe.main;
 
+import tictactoe.ai.AI;
 import java.util.Scanner;
+import tictactoe.game.Game;
+import tictactoe.game.Move;
 
 public class Main {
 
@@ -9,15 +12,14 @@ public class Main {
      */
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
-        TicTacToe game = new TicTacToe(3, 3, 3);
+        Game game = new Game(3, 3, 3);
         AI ai = new AI(game, 'X');
         int row;
         int col;
 
         System.out.println("=== Tic Tac Toe ===");
-        game.initialiseBoard();
 
-        game.printBoard();
+        game.getBoard().printBoard();
         System.out.println("");
 
         while (true) {
@@ -51,10 +53,10 @@ public class Main {
 //                Move move = ai.minimax(game.getBoard(), 'O', 'X', true);
 //                game.makeMove(move.getRowCoordinate(), move.getColCoordinate());
             }
-            game.printBoard();
+            game.getBoard().printBoard();
             System.out.println("");
 
-            if (game.checkForWin(game.getBoard(), game.getPlayer())) {
+            if (game.getBoard().checkForWin(game.getPlayer(), game.getLatestMove())) {
                 System.out.println("Player " + game.getPlayer() + " wins!");
                 break;
             }
