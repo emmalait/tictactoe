@@ -49,6 +49,24 @@ public class TicTacToe {
     }
 
     /**
+     * Method returns no. of columns on the current board.
+     *
+     * @return No of columns
+     */
+    public int getCols() {
+        return cols;
+    }
+
+    /**
+     * Method returns no. of rows on the current board.
+     *
+     * @return No of rows
+     */
+    public int getRows() {
+        return rows;
+    }
+
+    /**
      * Method initialises the game's board with character '-'.
      */
     public void initialiseBoard() {

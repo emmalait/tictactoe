@@ -10,51 +10,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         TicTacToe game = new TicTacToe(3, 3, 3);
-        AI ai = new AI(game, 3, 3, 'X');
+        AI ai = new AI(game, 'X');
         int row;
         int col;
 
         System.out.println("=== Tic Tac Toe ===");
         game.initialiseBoard();
-        /*game.makeMove(0, 2);
-        game.makeMove(1, 0);
-        game.makeMove(2, 0);
-        game.switchPlayer();
-        game.makeMove(0, 0);
-        game.makeMove(2, 1);
-        game.makeMove(2, 2);
-        game.switchPlayer();
-        game.printBoard();*/
-
-        /*game.makeMove(0, 0);
-        game.makeMove(0, 1);
-        //game.makeMove(1, 1);
-        game.switchPlayer();
-        game.makeMove(0, 2);
-        game.makeMove(1, 0);
-        //game.makeMove(2, 2);
-        game.switchPlayer();*/
-        
-        /*game.makeMove(0, 0);
-        game.makeMove(1, 1);
-        game.makeMove(1, 2);
-        game.switchPlayer();
-        game.makeMove(0, 2);
-        game.makeMove(1, 0);
-        game.makeMove(2, 2);
-        game.switchPlayer();*/
-        
-        /*game.makeMove(0, 0);
-        game.makeMove(0, 1);
-        game.makeMove(1, 2);
-        game.makeMove(2, 0);
-        game.switchPlayer();
-        
-        game.makeMove(0, 2);
-        game.makeMove(1, 0);
-        game.makeMove(1, 1);
-        game.makeMove(2, 2);
-        game.switchPlayer();*/
 
         game.printBoard();
         System.out.println("");

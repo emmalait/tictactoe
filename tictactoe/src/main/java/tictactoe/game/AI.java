@@ -9,29 +9,23 @@ import tictactoe.data.MoveList;
 public class AI {
 
     private TicTacToe game;
-    private int rows;
-    private int cols;
     private char maxPlayer;
     private char minPlayer;
     private int maxDepth;
 
     /**
      * @param game The instance of TicTacToe the AI is to play in
-     * @param rows Number of rows on the board
-     * @param cols Number of columns on the board
      * @param maxPlayer The mark the AI is playing with (X/O)
      */
-    public AI(TicTacToe game, int rows, int cols, char maxPlayer) {
+    public AI(TicTacToe game, char maxPlayer) {
         this.game = game;
-        this.rows = rows;
-        this.cols = cols;
         this.maxPlayer = maxPlayer;
         if (maxPlayer == 'X') {
             this.minPlayer = 'O';
         } else {
             this.minPlayer = 'X';
         }
-        this.maxDepth = (rows * cols > 7) ? 7 : rows * cols;
+        this.maxDepth = (game.getRows() * game.getCols() > 7) ? 7 : game.getRows() * game.getCols();
     }
 
     /**
@@ -40,9 +34,9 @@ public class AI {
      * @return AI's calculated move
      */
     public Move makeMove() {
-        char[][] boardCopy = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        char[][] boardCopy = new char[game.getRows()][game.getCols()];
+        for (int i = 0; i < game.getRows(); i++) {
+            for (int j = 0; j < game.getCols(); j++) {
                 boardCopy[i][j] = game.getBoard()[i][j];
             }
         }
@@ -65,9 +59,9 @@ public class AI {
      * @return Move calculated by the algorithm
      */
     public Move minmax(char[][] board, int depth, char player, Move latestMove) {
-        char[][] boardCopy = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        char[][] boardCopy = new char[game.getRows()][game.getCols()];
+        for (int i = 0; i < game.getRows(); i++) {
+            for (int j = 0; j < game.getCols(); j++) {
                 boardCopy[i][j] = board[i][j];
             }
         }
@@ -88,7 +82,7 @@ public class AI {
             return new Move(-1, -1, 0);
         }
 
-        MoveList scores = new MoveList(rows*cols);
+        MoveList scores = new MoveList(game.getRows() * game.getCols());
         
         for (int i = 0; i < availablePlaces.size(); i++) {
             Move move = availablePlaces.get(i);
@@ -248,10 +242,10 @@ public class AI {
      * @return List of possible moves
      */
     private MoveList getAvailablePlaces(char[][] board) {
-        MoveList availablePlaces = new MoveList(rows * cols);
+        MoveList availablePlaces = new MoveList(game.getRows() * game.getCols());
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < game.getRows(); i++) {
+            for (int j = 0; j < game.getCols(); j++) {
                 if (board[i][j] == '-') {
                     availablePlaces.add(new Move(i, j));
                 }
@@ -259,6 +253,13 @@ public class AI {
         }
 
         return availablePlaces;
+    }
+    
+    private MoveList getPotentialPlaces(char[][] board, Move latestMove) {
+        MoveList places = new MoveList(game.getRows() * game.getCols());
+        
+        
+        return places;
     }
 
 }
