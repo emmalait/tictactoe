@@ -8,7 +8,6 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         Scanner reader = new Scanner(System.in);
         TicTacToe game = new TicTacToe(3, 3, 3);
         AI ai = new AI(game, 3, 3, 'X');
@@ -35,6 +34,27 @@ public class Main {
         game.makeMove(1, 0);
         //game.makeMove(2, 2);
         game.switchPlayer();*/
+        
+        /*game.makeMove(0, 0);
+        game.makeMove(1, 1);
+        game.makeMove(1, 2);
+        game.switchPlayer();
+        game.makeMove(0, 2);
+        game.makeMove(1, 0);
+        game.makeMove(2, 2);
+        game.switchPlayer();*/
+        
+        /*game.makeMove(0, 0);
+        game.makeMove(0, 1);
+        game.makeMove(1, 2);
+        game.makeMove(2, 0);
+        game.switchPlayer();
+        
+        game.makeMove(0, 2);
+        game.makeMove(1, 0);
+        game.makeMove(1, 1);
+        game.makeMove(2, 2);
+        game.switchPlayer();*/
 
         game.printBoard();
         System.out.println("");
@@ -50,11 +70,11 @@ public class Main {
 //                col = Integer.parseInt(reader.nextLine());
 //                System.out.println("");
 //                game.makeMove(row - 1, col - 1);
-                long aikaAlussa = System.currentTimeMillis();
+                long timeAtStart = System.currentTimeMillis();
                 Move move = ai.makeMove();
-                long aikaLopussa = System.currentTimeMillis();
-                System.out.println("Operaatioon kului aikaa: " + (aikaLopussa - aikaAlussa) + "ms.");
-                game.makeMove(move.getRowCoordinate(), move.getColCoordinate());
+                long timeAtEnd = System.currentTimeMillis();
+                System.out.println("Operation took: " + (timeAtEnd - timeAtStart) + "ms.");
+                game.makeMove(move.getRow(), move.getCol());
 
             } else {
                 System.out.println("Player " + game.getPlayer() + "'s turn ");

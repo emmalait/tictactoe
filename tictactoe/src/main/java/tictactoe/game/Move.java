@@ -6,13 +6,13 @@ package tictactoe.game;
  */
 public class Move {
     
-    private int rowCoordinate;
-    private int colCoordinate;
+    private int row;
+    private int col;
     private int score;
     
     public Move() {
-        this.rowCoordinate = -1;
-        this.colCoordinate = -1;
+        this.row = -1;
+        this.col = -1;
         this.score = 0;
     }
 
@@ -22,8 +22,8 @@ public class Move {
      * @param col Column coordinate
      */
     public Move(int row, int col) {
-        this.rowCoordinate = row;
-        this.colCoordinate = col;
+        this.row = row;
+        this.col = col;
         this.score = 0;
     }
     
@@ -34,8 +34,8 @@ public class Move {
      * @param score Score of the move
      */
     public Move(int row, int col, int score) {
-        this.rowCoordinate = row;
-        this.colCoordinate = col;
+        this.row = row;
+        this.col = col;
         this.score = score;
     }
 
@@ -43,16 +43,16 @@ public class Move {
      * Returns row coordinate
      * @return Row coordinate
      */
-    public int getRowCoordinate() {
-        return rowCoordinate;
+    public int getRow() {
+        return row;
     }
     
     /**
      * Returns column coordinate
      * @return Column coordinate
      */
-    public int getColCoordinate() {
-        return colCoordinate;
+    public int getCol() {
+        return col;
     }
     
     /**
@@ -65,18 +65,18 @@ public class Move {
 
     /**
      * Sets row coordinate
-     * @param rowCoordinate Row coordinate
+     * @param row Row coordinate
      */
-    public void setRowCoordinate(int rowCoordinate) {
-        this.rowCoordinate = rowCoordinate;
+    public void setRow(int row) {
+        this.row = row;
     }
 
     /**
      * Sets column coordinate
-     * @param colCoordinate Column coordinate
+     * @param col Column coordinate
      */
-    public void setColCoordinate(int colCoordinate) {
-        this.colCoordinate = colCoordinate;
+    public void setCol(int col) {
+        this.col = col;
     }
     
     /**
@@ -89,7 +89,7 @@ public class Move {
 
     @Override
     public String toString() {
-        return "(row: " + rowCoordinate + ", col: " + colCoordinate + ", score: " + score + ')';
+        return "(row: " + row + ", col: " + col + ", score: " + score + ')';
     }
     
 }

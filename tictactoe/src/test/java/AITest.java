@@ -47,8 +47,8 @@ public class AITest {
         game.switchPlayer();
         Move move = ai.minmax(game.getBoard(), 0, 'X', new Move(2, 2));
         
-        assertEquals(move.getRowCoordinate(), 2);
-        assertEquals(move.getColCoordinate(), 1);
+        assertEquals(move.getRow(), 2);
+        assertEquals(move.getCol(), 1);
     }
     
     @Test
@@ -63,8 +63,8 @@ public class AITest {
         game.switchPlayer();
         Move move = ai.minmaxAB(game.getBoard(), 0, 'X', new Move(2, 2), Integer.MIN_VALUE, Integer.MAX_VALUE);
         
-        assertEquals(move.getRowCoordinate(), 2);
-        assertEquals(move.getColCoordinate(), 1);
+        assertEquals(move.getRow(), 2);
+        assertEquals(move.getCol(), 1);
     }
 
 }

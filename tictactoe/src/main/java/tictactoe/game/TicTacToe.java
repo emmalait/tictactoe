@@ -88,8 +88,8 @@ public class TicTacToe {
             return false;
         } else {
             board[row][col] = player;
-            latestMove.setColCoordinate(col);
-            latestMove.setRowCoordinate(row);
+            latestMove.setCol(col);
+            latestMove.setRow(row);
             moves++;
             return true;
         }
@@ -142,10 +142,10 @@ public class TicTacToe {
      * @return true if a winning streak is found, false if not
      */
     public boolean checkForWin(char[][] board, char player) {
-        return (checkRowForWin(board, player, latestMove.getRowCoordinate())
-                || checkColumnForWin(board, player, latestMove.getColCoordinate())
-                || checkFwdDiagonalForWin(board, player, latestMove.getRowCoordinate(), latestMove.getColCoordinate())
-                || checkBwdDiagonalForWin(board, player, latestMove.getRowCoordinate(), latestMove.getColCoordinate()));
+        return (checkRowForWin(board, player, latestMove.getRow())
+                || checkColumnForWin(board, player, latestMove.getCol())
+                || checkFwdDiagonalForWin(board, player, latestMove.getRow(), latestMove.getCol())
+                || checkBwdDiagonalForWin(board, player, latestMove.getRow(), latestMove.getCol()));
     }
     
     /**
@@ -154,13 +154,14 @@ public class TicTacToe {
      *
      * @param board
      * @param player
+     * @param latestMove
      * @return true if a winning streak is found, false if not
      */
     public boolean checkForWinWithMove(char[][] board, char player, Move latestMove) {
-        return (checkRowForWin(board, player, latestMove.getRowCoordinate())
-                || checkColumnForWin(board, player, latestMove.getColCoordinate())
-                || checkFwdDiagonalForWin(board, player, latestMove.getRowCoordinate(), latestMove.getColCoordinate())
-                || checkBwdDiagonalForWin(board, player, latestMove.getRowCoordinate(), latestMove.getColCoordinate()));
+        return (checkRowForWin(board, player, latestMove.getRow())
+                || checkColumnForWin(board, player, latestMove.getCol())
+                || checkFwdDiagonalForWin(board, player, latestMove.getRow(), latestMove.getCol())
+                || checkBwdDiagonalForWin(board, player, latestMove.getRow(), latestMove.getCol()));
     }
     
     /**

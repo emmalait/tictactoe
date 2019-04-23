@@ -1,7 +1,5 @@
 package tictactoe.game;
 
-import java.util.ArrayList;
-import java.util.List;
 import tictactoe.data.MoveList;
 
 /**
@@ -33,7 +31,7 @@ public class AI {
         } else {
             this.minPlayer = 'X';
         }
-        this.maxDepth = 4;
+        this.maxDepth = (rows * cols > 7) ? 7 : rows * cols;
     }
 
     /**
@@ -48,6 +46,10 @@ public class AI {
                 boardCopy[i][j] = game.getBoard()[i][j];
             }
         }
+        
+        /*if (getAvailablePlaces(boardCopy).size() == cols * rows) {
+            return new Move();
+        }*/
 
         return minmax(boardCopy, 0, maxPlayer, new Move());
         //return minmaxAB(boardCopy, 0, maxPlayer, new Move(), Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -81,6 +83,7 @@ public class AI {
         // Check passed board for empty spaces.
         MoveList availablePlaces = getAvailablePlaces(boardCopy);
         
+        // If there are no empty spaces, game is a draw: return score 0.
         if (availablePlaces.isEmpty()) {
             return new Move(-1, -1, 0);
         }
@@ -89,15 +92,13 @@ public class AI {
         
         for (int i = 0; i < availablePlaces.size(); i++) {
             Move move = availablePlaces.get(i);
-            boardCopy[move.getRowCoordinate()][move.getColCoordinate()] = player;
+            boardCopy[move.getRow()][move.getCol()] = player;
             Move moveWithScore = minmax(boardCopy, depth + 1, (player == maxPlayer) ? minPlayer : maxPlayer, move);
-            moveWithScore.setRowCoordinate(move.getRowCoordinate());
-            moveWithScore.setColCoordinate(move.getColCoordinate());
+            moveWithScore.setRow(move.getRow());
+            moveWithScore.setCol(move.getCol());
             scores.add(moveWithScore);
-            boardCopy[move.getRowCoordinate()][move.getColCoordinate()] = '-';
+            boardCopy[move.getRow()][move.getCol()] = '-';
         }
-
-        System.out.println("Scores size: " + scores.size());
         
         if (player == maxPlayer) {
             Move max = new Move(-1, -1, Integer.MIN_VALUE);
@@ -139,30 +140,52 @@ public class AI {
      */
     public Move minmaxAB(char[][] board, int depth, char player, Move latestMove, int alpha, int beta) {
         if (game.checkForWinWithMove(board, maxPlayer, latestMove)) {
-            // If maximizing player wins, return score maxdepth-d.
+            // If maximizing player wins, return score maxDepth-depth.
+            
+            /*System.out.println("d: " + depth + ", player: " + player + ", move: " + latestMove);
+            System.out.println("Max wins, score: " + String.valueOf(maxDepth - depth));*/
+            
             return new Move(-1, -1, maxDepth - depth);
         } else if (game.checkForWinWithMove(board, minPlayer, latestMove)) {
-            // If minimizing player wins, return score maxdepth-10.
+            // If minimizing player wins, return score depth-maxDepth.
+            
+            /*System.out.println("d: " + depth + ", player: " + player + ", move: " + latestMove);
+            System.out.println("Min wins, score: " + String.valueOf(depth - maxDepth));*/
+            
             return new Move(-1, -1, depth - maxDepth);
+        }
+        
+        // If recursion has reached maxDepth & no winner has been found, return score 0.
+        if (depth == maxDepth) {
+            return new Move(-1, -1, 0);
         }
 
         // Check passed board for empty spaces.
-        List<Move> availablePlaces = getAvailablePlaces(board);
+        MoveList availablePlaces = getAvailablePlaces(board);
 
+        // If there are no empty spaces, game is a draw: return score 0.
         if (availablePlaces.isEmpty()) {
+            /*System.out.println("d: " + depth + ", player: " + player + ", move: " + latestMove);
+            System.out.println("Draw");*/
             return new Move(-1, -1, 0);
         }
 
         if (player == maxPlayer) {
             Move bestMove = new Move(-1, -1, Integer.MIN_VALUE);
 
-            for (Move move : availablePlaces) {
-                board[move.getRowCoordinate()][move.getColCoordinate()] = player;
+            for (int i = 0; i < availablePlaces.size(); i++) {
+                Move move = availablePlaces.get(i);
+                //System.out.println("Player " + player + " makes move: " + move);
+                
+                board[move.getRow()][move.getCol()] = player;
                 Move moveWithScore = minmaxAB(board, depth + 1, (player == maxPlayer) ? minPlayer : maxPlayer, move, alpha, beta);
-                moveWithScore.setRowCoordinate(move.getRowCoordinate());
-                moveWithScore.setColCoordinate(move.getColCoordinate());
+                moveWithScore.setRow(move.getRow());
+                moveWithScore.setCol(move.getCol());
+                
+                board[move.getRow()][move.getCol()] = '-';
 
-                //System.out.println("Move (max): " + move.getRowCoordinate() + ", " + move.getColCoordinate() + "; alpha: " + alpha + ", beta: " + beta);
+                //System.out.println("Move (max): " + move.getRow() + ", " + move.getCol() + "; alpha: " + alpha + ", beta: " + beta);
+                
                 if (moveWithScore.getScore() > bestMove.getScore()) {
                     bestMove = moveWithScore;
                 }
@@ -171,13 +194,13 @@ public class AI {
                     alpha = bestMove.getScore();
                 }
 
+                // Alpha-beta pruning
                 if (beta <= alpha) {
-                    //System.out.println("BREAK: Move (max): " + move.getRowCoordinate() + ", " + move.getColCoordinate() + "; alpha: " + alpha + ", beta: " + beta);
-
+                    //System.out.println("BREAK: Move (max): " + move.getRow() + ", " + move.getCol() + "; alpha: " + alpha + ", beta: " + beta);
+                    
                     break;
                 }
 
-                board[move.getRowCoordinate()][move.getColCoordinate()] = '-';
             }
 
             return bestMove;
@@ -185,13 +208,19 @@ public class AI {
         } else {
             Move bestMove = new Move(-1, -1, Integer.MAX_VALUE);
 
-            for (Move move : availablePlaces) {
-                board[move.getRowCoordinate()][move.getColCoordinate()] = player;
+            for (int i = 0; i < availablePlaces.size(); i++) {
+                Move move = availablePlaces.get(i);
+                //System.out.println("Player " + player + " makes move: " + move);
+                
+                board[move.getRow()][move.getCol()] = player;
                 Move moveWithScore = minmaxAB(board, depth + 1, (player == maxPlayer) ? minPlayer : maxPlayer, move, alpha, beta);
-                moveWithScore.setRowCoordinate(move.getRowCoordinate());
-                moveWithScore.setColCoordinate(move.getColCoordinate());
+                moveWithScore.setRow(move.getRow());
+                moveWithScore.setCol(move.getCol());
+                
+                board[move.getRow()][move.getCol()] = '-';
 
-                //System.out.println("Move (min): " + move.getRowCoordinate() + ", " + move.getColCoordinate() + "; alpha: " + alpha + ", beta: " + beta);
+                //System.out.println("Move (min): " + move.getRow() + ", " + move.getCol() + "; alpha: " + alpha + ", beta: " + beta);
+                
                 if (moveWithScore.getScore() < bestMove.getScore()) {
                     bestMove = moveWithScore;
                 }
@@ -200,18 +229,16 @@ public class AI {
                     beta = bestMove.getScore();
                 }
 
+                // Alpha-beta pruning
                 if (beta <= alpha) {
-                    //System.out.println("BREAK: Move (min): " + move.getRowCoordinate() + ", " + move.getColCoordinate() + "; alpha: " + alpha + ", beta: " + beta);
-
+                    //System.out.println("BREAK: Move (min): " + move.getRow() + ", " + move.getCol() + "; alpha: " + alpha + ", beta: " + beta);
+                    
                     break;
                 }
-
-                board[move.getRowCoordinate()][move.getColCoordinate()] = '-';
             }
 
             return bestMove;
         }
-
     }
 
     /**
@@ -221,7 +248,6 @@ public class AI {
      * @return List of possible moves
      */
     private MoveList getAvailablePlaces(char[][] board) {
-        List<Move> availablePlaces2 = new ArrayList<>();
         MoveList availablePlaces = new MoveList(rows * cols);
 
         for (int i = 0; i < rows; i++) {

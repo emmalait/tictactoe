@@ -22,11 +22,16 @@ public class MoveList {
     }
     
     public boolean isEmpty() {
-        return this.index == 0;
+        return this.index == -1;
     }
     
     public int size() {
         return this.index + 1;
     }
-    
+
+    @Override
+    public String toString() {
+        return "MoveList{" + "moves=" + moves + ", index=" + index + '}';
+    }
+
 }
