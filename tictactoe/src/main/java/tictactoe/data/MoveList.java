@@ -46,6 +46,36 @@ public class MoveList {
     public int size() {
         return this.index + 1;
     }
+    
+    public boolean moveWithCoordinatesExists(Move move) {
+        boolean exists = false;
+        
+        for (int i = 0; i <= index; i++) {
+            if (moves[i].getRow() == move.getRow() && moves[i].getCol() == move.getCol()) {
+                exists = true;
+                break;
+            }
+        }
+        
+        return exists;
+    }
+    
+    public void deleteMoveWithCoordinates(Move move) {
+        int deleteIndex = -1;
+        for (int i = 0; i <= index; i++) {
+            if (moves[i].getRow() == move.getRow() && moves[i].getCol() == move.getCol()) {
+                deleteIndex = i;
+                break;
+            }
+        }
+
+        if (deleteIndex != -1) {
+            for (int i = deleteIndex; i < index; i++) {
+                moves[i] = moves[i + 1];
+            }
+            index--;
+        }
+    }
 
     @Override
     public String toString() {

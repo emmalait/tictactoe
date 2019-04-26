@@ -79,6 +79,7 @@ public class Main {
                 col = Integer.parseInt(reader.nextLine());
                 System.out.println("");
                 game.makeMove(row - 1, col - 1);
+                ai.addPotentialMoves(ai.getPotentialMoves(), new Move(row - 1, col - 1), game.getBoard());
 
 //                Move move = ai.minimax(game.getBoard(), 'O', 'X', true);
 //                game.makeMove(move.getRowCoordinate(), move.getColCoordinate());
