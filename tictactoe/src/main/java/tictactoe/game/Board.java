@@ -1,7 +1,9 @@
 
 package tictactoe.game;
 
-
+/**
+ * Class is responsible for holding the game's board & validating moves.
+ */
 public class Board {
     
     private char[][] array;
@@ -25,29 +27,14 @@ public class Board {
         initialiseBoard();
     }
     
-    /**
-     * Method returns the current array.
-     *
-     * @return current array
-     */
     public char[][] getArray() {
         return array;
     }
 
-    /**
-     * Method returns no. of rows on the current board.
-     *
-     * @return No of rows
-     */
     public int getRows() {
         return rows;
     }
 
-    /**
-     * Method returns no. of columns on the current board.
-     *
-     * @return No of columns
-     */
     public int getCols() {
         return cols;
     }
@@ -76,8 +63,23 @@ public class Board {
     }
     
     /**
+     * Method creates a copy of the board.
+     * @return Copy of the board
+     */
+    public Board copy() {
+        Board boardCopy = new Board(this.rows, this.cols, this.winningStreak);
+
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                boardCopy.getArray()[i][j] = this.array[i][j];
+            }
+        }
+        
+        return boardCopy;
+    }
+    
+    /**
      * Method checks whether a coordinate is within the board.
-     *
      * @param row Row coordinate
      * @param col Column coordinate
      * @return true if coordinate is within board, false if coordinate is out of
@@ -89,7 +91,6 @@ public class Board {
     
     /**
      * Method checks whether a coordinate is free/unused.
-     *
      * @param row Row coordinate
      * @param col Column coordinate
      * @return true if coordinate is free, false if coordinate has been used
@@ -101,7 +102,6 @@ public class Board {
     /**
      * Method checks the current situation on the board for current player's
      * winning streaks.
-     *
      * @param player
      * @param latestMove
      * @return true if a winning streak is found, false if not
@@ -116,7 +116,6 @@ public class Board {
     /**
      * Method checks the current situation on the board for current player's
      * winning streaks.
-     *
      * @param player
      * @param latestMove
      * @return true if a winning streak is found, false if not
@@ -130,7 +129,6 @@ public class Board {
 
     /**
      * Method checks a row for winning streaks by the current player.
-     *
      * @param row Row to be checked
      * @return true if a winning streak is found, false if not
      */
@@ -140,7 +138,6 @@ public class Board {
 
     /**
      * Method checks a column for winning streaks by the current player.
-     *
      * @param col Column to be checked
      * @return true if a winning streak is found, false if not
      */
@@ -151,7 +148,6 @@ public class Board {
     /**
      * Method checks a forward diagonal for winning streaks by the current
      * player.
-     *
      * @param row Row coordinate for the diagonal
      * @param col Column coordinate for the diagonal
      * @return true if a winning streak is found, false if not
@@ -171,7 +167,6 @@ public class Board {
     /**
      * Method checks a backward diagonal for winning streaks by the current
      * player.
-     *
      * @param row Row coordinate for the diagonal
      * @param col Column coordinate for the diagonal
      * @return true if a winning streak is found, false if not
@@ -193,7 +188,6 @@ public class Board {
     /**
      * Method recursively checks a series of coordinates on the board for a
      * winning streak by a player.
-     *
      * @param player 
      * @param counter Number of subsequent marks found by the current player
      * @param col Column coordinate to be checked

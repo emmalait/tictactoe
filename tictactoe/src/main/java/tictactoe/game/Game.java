@@ -4,7 +4,6 @@ import tictactoe.ai.AI;
 
 /**
  * Class is responsible for the basic game mechanics.
- *
  */
 public class Game {
 
@@ -18,25 +17,26 @@ public class Game {
     private Move latestMove;
     private int moves;
 
-    /**
-     *
-     * @param rows Rows of the board
-     * @param cols Columns of the board
-     * @param winningStreak Number of marks in a row required to win
-     */
     public Game() {
         this.latestMove = new Move();
         this.moves = 0;
         this.ui = new UI(this);
     }
 
+    /**
+     * Method sets up the game with parameters collected from the user.
+     * @param rows Rows of the board
+     * @param cols Columns of the board
+     * @param winningStreak Number of marks in a row required to win
+     * @param isHumanMode Mode of playing; true = human vs. AI, false = AI vs. AI
+     */
     public void setup(int rows, int cols, int winningStreak, boolean isHumanMode) {
         this.winningStreak = winningStreak;
         this.board = new Board(rows, cols, winningStreak);
         this.isHumanMode = isHumanMode;
 
         if (isHumanMode) {
-            this.player1 = new Player('X');
+            this.player1 = new Player('X', this.ui);
             this.player2 = new Player('O', new AI(this, 'O'));
         } else {
             this.player1 = new Player('X', new AI(this, 'X'));
@@ -47,7 +47,8 @@ public class Game {
     }
 
     /**
-     *
+     * Method is used to start the game from the main class & for controlling 
+     * turns & the course of the game.
      */
     public void start() {
         ui.printStart();
@@ -69,44 +70,25 @@ public class Game {
         }
     }
 
-    /**
-     * Method returns the current player of the game.
-     *
-     * @return Player current player
-     */
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    /**
-     * Method returns the game's board.
-     *
-     * @return board
-     */
     public Board getBoard() {
         return board;
     }
 
-    /**
-     * Method returns the game's winning streak.
-     *
-     * @return winning streak
-     */
     public int getWinningStreak() {
         return winningStreak;
     }
 
-    /**
-     * Method returns the most recent move in the game.
-     *
-     * @return most recent move
-     */
     public Move getLatestMove() {
         return latestMove;
     }
 
     /**
-     * Method switches player (from X to O or from O to X).
+     * Method switches player (from player 1 to 2 or from 2 to 1).
      */
     public void switchPlayer() {
         if (this.currentPlayer == this.player1) {
@@ -118,9 +100,7 @@ public class Game {
 
     /**
      * Method validates a move and updates the board accordingly.
-     *
-     * @param row Row coordinate
-     * @param col Column coordinate
+     * @param move Move to be validated
      * @return true if move is legal, false if move is illegal
      */
     public boolean makeMove(Move move) {
@@ -148,18 +128,29 @@ public class Game {
         }
     }
 
+    /**
+     * Method checks if there is a winning streak on the board by the current player.
+     * @return true if streak exists, false if not
+     */
     public boolean isGameWon() {
         return board.checkForWin(getCurrentPlayer().getMark(), getLatestMove());
     }
 
     /**
      * Method checks if game is over based on no. of moves made.
-     *
      * @return true if no more moves are possible, false if there are possible
      * moves
      */
     public boolean isGameOver() {
         return moves == board.getRows() * board.getRows();
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+    
+    public Player getPlayer2() {
+        return player2;
     }
 
 }

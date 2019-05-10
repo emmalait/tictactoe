@@ -3,14 +3,17 @@ package tictactoe.game;
 import java.util.Scanner;
 import tictactoe.ai.AI;
 
+/**
+ * lass for implementing the player object in the game.
+ */
 public class Player {
 
     private char mark;
     private AI ai;
     private boolean aiPlayer;
-    private Scanner reader = new Scanner(System.in);
+    private UI ui;
 
-    public Player(char mark) {
+    public Player(char mark, UI ui) {
         this.mark = mark;
         this.aiPlayer = false;
     }
@@ -21,17 +24,17 @@ public class Player {
         this.aiPlayer = true;
     }
 
+    /**
+     * Method retrieves a move from the player: for an AI player, move is retrieved
+     * through AI class's method; for a human player, move is retrieved from the
+     * user.
+     * @return Retrieved move
+     */
     public Move getMove() {
         if (aiPlayer) {
             return ai.makeMove();
         } else {
-            System.out.println("Enter move coordinates: ");
-            System.out.print("row: ");
-            int row = Integer.parseInt(reader.nextLine());
-            System.out.print("column: ");
-            int col = Integer.parseInt(reader.nextLine());
-            System.out.println("");
-            return new Move(row - 1, col - 1);
+            return ui.getMoveFromUser();
         }
     }
 

@@ -16,54 +16,53 @@ public class AITest {
     public AITest() {
     }
     
-//    @BeforeClass
-//    public static void setUpClass() {
-//    }
-//    
-//    @AfterClass
-//    public static void tearDownClass() {
-//    }
-    
     @Before
     public void setUp() {
-        game = new Game(3, 3, 3);
-        ai = new AI(game, 'X');
-    }
-    
-//    @After
-//    public void tearDown() {
-//    }
-
-    @Test
-    public void minmaxGeneratesWinningMove() {
-        game.makeMove(0, 0);
-        game.makeMove(0, 1);
-        game.makeMove(1, 1);
-        game.switchPlayer();
-        game.makeMove(0, 2);
-        game.makeMove(1, 0);
-        game.makeMove(2, 2);
-        game.switchPlayer();
-        Move move = ai.minmax(game.getBoard(), 0, 'X', new Move(2, 2));
-        
-        assertEquals(move.getRow(), 2);
-        assertEquals(move.getCol(), 1);
+        game = new Game();
+        game.setup(3, 3, 3, true);
     }
     
     @Test
-    public void minmaxABGeneratesWinningMove() {
-        game.makeMove(0, 0);
-        game.makeMove(0, 1);
-        game.makeMove(1, 1);
+    public void minmaxABGeneratesWinningMove1() {
+        game.makeMove(new Move(1, 1));
         game.switchPlayer();
-        game.makeMove(0, 2);
-        game.makeMove(1, 0);
-        game.makeMove(2, 2);
+        game.makeMove(new Move(0, 1)); 
         game.switchPlayer();
-        Move move = ai.minmaxAB(game.getBoard(), 0, 'X', new Move(2, 2), Integer.MIN_VALUE, Integer.MAX_VALUE);
-        
+        game.makeMove(new Move(1, 2));
+        game.switchPlayer();
+        Move move = game.getPlayer2().getAi().makeMove();
+        assertEquals(move.getRow(), 1);
+        assertEquals(move.getCol(), 0);
+    }
+    
+    @Test
+    public void minmaxABGeneratesWinningMove2() {
+        game.makeMove(new Move(0, 0));
+        game.switchPlayer();
+        game.makeMove(new Move(0, 1)); 
+        game.switchPlayer();
+        game.makeMove(new Move(1, 1));
+        game.switchPlayer();
+        Move move = game.getPlayer2().getAi().makeMove();
         assertEquals(move.getRow(), 2);
-        assertEquals(move.getCol(), 1);
+        assertEquals(move.getCol(), 2);
+    }
+    
+    @Test
+    public void minmaxABGeneratesWinningMove3() {
+        game.makeMove(new Move(0, 2));
+        game.switchPlayer();
+        game.makeMove(new Move(1, 2)); 
+        game.switchPlayer();
+        game.makeMove(new Move(2, 2));
+        game.switchPlayer();
+        game.makeMove(new Move(1, 1));
+        game.switchPlayer();
+        game.makeMove(new Move(0, 0));
+        game.switchPlayer();
+        Move move = game.getPlayer2().getAi().makeMove();
+        assertEquals(move.getRow(), 1);
+        assertEquals(move.getCol(), 0);
     }
 
 }

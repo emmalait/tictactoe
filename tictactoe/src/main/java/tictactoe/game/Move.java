@@ -1,8 +1,7 @@
 package tictactoe.game;
 
 /**
- * Class for the move entity
- * 
+ * Class for implementing the move object in the game.
  */
 public class Move {
     
@@ -16,73 +15,38 @@ public class Move {
         this.score = 0;
     }
 
-    /**
-     * 
-     * @param row Row coordinate
-     * @param col Column coordinate
-     */
     public Move(int row, int col) {
         this.row = row;
         this.col = col;
         this.score = 0;
     }
     
-    /**
-     * 
-     * @param row Row coordinate
-     * @param col Column coordinate
-     * @param score Score of the move
-     */
     public Move(int row, int col, int score) {
         this.row = row;
         this.col = col;
         this.score = score;
     }
 
-    /**
-     * Returns row coordinate
-     * @return Row coordinate
-     */
     public int getRow() {
         return row;
     }
-    
-    /**
-     * Returns column coordinate
-     * @return Column coordinate
-     */
+
     public int getCol() {
         return col;
     }
     
-    /**
-     * Returns score
-     * @return Score
-     */
     public int getScore() {
         return this.score;
     }
 
-    /**
-     * Sets row coordinate
-     * @param row Row coordinate
-     */
     public void setRow(int row) {
         this.row = row;
     }
 
-    /**
-     * Sets column coordinate
-     * @param col Column coordinate
-     */
     public void setCol(int col) {
         this.col = col;
     }
-    
-    /**
-     * Sets score
-     * @param score Score
-     */
+
     public void setScore(int score) {
         this.score = score;
     }
