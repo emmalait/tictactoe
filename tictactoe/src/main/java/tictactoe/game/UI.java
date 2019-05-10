@@ -15,7 +15,7 @@ public class UI {
     }
 
     /**
-     * Method prints the setup of the game & retrieves settings from the user.
+     * Method prints the setup of the game and retrieves settings from the user.
      */
     public void printStart() {
         System.out.println("=== Tic Tac Toe ===");
@@ -72,7 +72,7 @@ public class UI {
     }
 
     /**
-     * Method prints & handles one turn of the game.
+     * Method prints and handles one turn of the game.
      */
     public void printTurn() {
         Player player = game.getCurrentPlayer();
@@ -97,7 +97,6 @@ public class UI {
         int row = Integer.parseInt(reader.nextLine());
         System.out.print("column: ");
         int col = Integer.parseInt(reader.nextLine());
-        System.out.println("");
         return new Move(row - 1, col - 1);
     }
 

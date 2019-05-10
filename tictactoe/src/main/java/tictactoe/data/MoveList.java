@@ -75,7 +75,7 @@ public class MoveList {
     /**
      * Method checks if the MoveList holds a move with the given coordinates.
      * @param move Move whose coordinates are used for the check
-     * @return 
+     * @return true if move exists, false if not
      */
     public boolean moveWithCoordinatesExists(Move move) {
         boolean exists = false;

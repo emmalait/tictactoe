@@ -47,8 +47,8 @@ public class Game {
     }
 
     /**
-     * Method is used to start the game from the main class & for controlling 
-     * turns & the course of the game.
+     * Method is used to start the game from the main class and for controlling 
+     * turns and the course of the game.
      */
     public void start() {
         ui.printStart();

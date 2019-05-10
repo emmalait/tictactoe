@@ -1,6 +1,5 @@
 package tictactoe.game;
 
-import java.util.Scanner;
 import tictactoe.ai.AI;
 
 /**
@@ -16,6 +15,7 @@ public class Player {
     public Player(char mark, UI ui) {
         this.mark = mark;
         this.aiPlayer = false;
+        this.ui = ui;
     }
 
     public Player(char mark, AI ai) {

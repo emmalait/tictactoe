@@ -2,7 +2,7 @@
 package tictactoe.game;
 
 /**
- * Class is responsible for holding the game's board & validating moves.
+ * Class is responsible for holding the game's board and validating moves.
  */
 public class Board {
     
@@ -102,8 +102,8 @@ public class Board {
     /**
      * Method checks the current situation on the board for current player's
      * winning streaks.
-     * @param player
-     * @param latestMove
+     * @param player Current player's mark (X/O)
+     * @param latestMove Most recent move
      * @return true if a winning streak is found, false if not
      */
     public boolean checkForWin(char player, Move latestMove) {
@@ -116,8 +116,8 @@ public class Board {
     /**
      * Method checks the current situation on the board for current player's
      * winning streaks.
-     * @param player
-     * @param latestMove
+     * @param player Current player's mark (X/O)
+     * @param latestMove Most recent move
      * @return true if a winning streak is found, false if not
      */
     public boolean checkForWinWithMove(char player, Move latestMove) {

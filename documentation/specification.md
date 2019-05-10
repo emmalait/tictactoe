@@ -10,7 +10,8 @@ Pohjana on ruudukko, johon pelaajat syöttävät vuorotellen omaa merkkiään (X
 - Min-max-algoritmi alpha-beta karsinnalla
 
 ## Aika- ja tilavaativuus
-- Tulossa
+- Best case: O(√b<sup>d</sup>)
+- Worst case: O(b<sup>d</sup>)
 
 ## Lähteet
 - https://en.wikipedia.org/wiki/Minimax
