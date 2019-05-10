@@ -84,11 +84,7 @@ public class Board {
      * bounds
      */
     public boolean isLegal(int row, int col) {
-        if (row < rows && row >= 0 && col < cols && col >= 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return row < rows && row >= 0 && col < cols && col >= 0;
     }
     
     /**

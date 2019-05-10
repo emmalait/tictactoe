@@ -6,15 +6,18 @@ public class MoveList {
 
     private Move[] moves;
     private int index;
+    private int indexMax;
 
     public MoveList(int size) {
         this.moves = new Move[size];
         this.index = -1;
+        this.indexMax = -1;
     }
 
     public void add(Move move) {
         this.index++;
         this.moves[this.index] = move;
+        
     }
 
     public void delete(Move move) {
@@ -45,6 +48,19 @@ public class MoveList {
 
     public int size() {
         return this.index + 1;
+    }
+    
+    public int length() {
+        return this.moves.length;
+    }
+    
+    public MoveList copy() {
+        MoveList newList = new MoveList(this.length());
+        for (int i = 0; i < this.index + 1; i++) {
+            newList.add(this.moves[i]);
+        }
+        
+        return newList;
     }
     
     public boolean moveWithCoordinatesExists(Move move) {
